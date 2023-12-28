@@ -1,0 +1,191 @@
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header mt-5">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Conferences </h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Conferences</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+
+              <div class="col-10 ">
+
+                <form [formGroup]="chercher" (ngSubmit)="handlechercherConference()">
+                  <div class="input-group">
+                    <label class="input-group-text">Titre:</label>
+                    <input type="text" class="form-control" formControlName="keyword">
+                    <button type="submit" class="btn btn-info">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+
+                </form>
+
+
+              </div>
+
+
+
+              <div class="col-2">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addConference">
+                  <i class="bi bi-plus">Ajouter Conference</i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.card-header -->
+          <div class="container-fluid">
+            <div class="input-group-prepend">
+
+            </div>
+            <div class="row row-cols-3 p-5 ">
+              <div *ngFor="let c of conferences " class="col">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+
+
+                    <div class="row row-cols-2">
+                      <div class="col-10"><h3 class="">{{c.titre}}</h3></div>
+                      <div class="col-2 text-right bg-info">
+                      <button type="button" class="btn  btn-info " data-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                      <a class="dropdown-item"  (click)="handleDeleteConference(c)">Supprimer</a>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateConference" (click)="getoldConference(c)">Modifier</a>
+
+                      </div>
+                    </div>
+                    </div>
+
+
+
+                    <p>{{c.date| date:'d MMMM yyyy' }}</p>
+
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-bag"></i>
+                  </div>
+                  <button class="btn btn-info text-center" (click)="consulterDetail(c.id)" class="small-box-footer">Consulter<i class="fas fa-arrow-circle-right"></i></button>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer clearfix ">
+              <ul class="pagination pagination-sm m-0 float-right">
+                <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
+                <li class="page-item" *ngFor="let p of pages ;let i=index">
+                  <a  (click)="gotopage(i)" [ngClass]="i==currentPage? 'btn btn-success':'btn btn-outline-success'"> {{i+1}}</a>
+
+                </li>
+                <li class="page-item"><a class="btn btn-info" (click)="gotonext()">&raquo;</a></li>
+              </ul>
+            </div>
+            <!-- /.row -->
+          </div><!-- /.container-fluid -->
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+  <div class="modal fade" id="addConference"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" >Ajouter Conference</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="container-fluid">
+            <form [formGroup]="addConferenceForm" (ngSubmit)="handleaddConference()">
+
+
+                  <label class="form-label">Titre :</label>
+                  <input type="text" formControlName="titre" class="form-control">
+                  <label class="form-label">Date  :</label>
+                  <input type="date" formControlName="date" class="form-control">
+                  <label class="form-label">Conferencier:</label>
+                  <input type="text" formControlName="conferencier" class="form-control">
+
+
+
+
+              <div class="modal-footer mt-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-info text-center">Ajouter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal fade" id="updateConference"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" >Modifier Conference</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="container-fluid">
+            <form [formGroup]="updateConference" (ngSubmit)="handleupdateConference()">
+
+
+              <label class="form-label">Titre :</label>
+              <input type="text" formControlName="titre" class="form-control">
+              <label class="form-label">Date  :</label>
+              <input type="date" formControlName="date" class="form-control">
+              <label class="form-label">Conferencier:</label>
+              <input type="text" formControlName="conferencier" class="form-control">
+
+
+
+
+              <div class="modal-footer mt-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-info text-center">Modifier</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>

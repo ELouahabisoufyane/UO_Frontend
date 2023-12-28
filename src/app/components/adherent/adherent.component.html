@@ -1,0 +1,247 @@
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header  mt-5">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Participants</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Participants</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </div>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+
+                <div class="col-10 ">
+
+                  <form [formGroup]="chercher" (ngSubmit)="handlechercherParticipant()">
+                    <div class="input-group">
+                      <label class="input-group-text">Nom:</label>
+                      <input type="text" class="form-control" formControlName="keyword">
+                      <button type="submit" class="btn btn-info">
+                        <i class="bi bi-search"></i>
+                      </button>
+                    </div>
+
+                  </form>
+
+
+                </div>
+
+
+
+                <div class="col-2">
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <i class="bi bi-plus">Ajouter Participant</i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <table id="example2" class="table table-borderless ">
+                <thead>
+                <tr>
+                  <th class="text-danger">Nom et Prénom</th>
+                  <th class="text-danger">rfidCardId </th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let p of participants ">
+                  <td>{{p.civilite}}.{{p.nom}}&nbsp;{{p.prenom}} </td>
+
+                  <td>{{p.rfidCardId}}</td>
+
+
+                  <td>
+                    <button   (click)="handleDeleteParticipant(p)" class="btn btn-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+
+                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#update" class="btn btn-success" (click)="getoldParticipant(p)">
+                      <i class="bi bi-wrench-adjustable"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </table>
+
+              <div class="card-footer clearfix ">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
+                  <li class="page-item" *ngFor="let p of pages ;let i=index">
+                    <a  (click)="gotopage(i)" [ngClass]="i==currentPage? 'btn btn-success':'btn btn-outline-success'"> {{i+1}}</a>
+
+                  </li>
+                  <li class="page-item"><a class="btn btn-info" (click)="gotonext()">&raquo;</a></li>
+                </ul>
+              </div>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+  <!-- Button trigger modal -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" >Ajouter Participant</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="container-fluid">
+          <form [formGroup]="addParticipantForm" (ngSubmit)="handleaddParticipant()">
+          <div class="row">
+            <div class="col-xxl">
+              <label class="form-label">Civilité:</label>
+              <select formControlName="civilite" >
+                <option value="" disabled>Sélectionnez une option</option>
+                <option value="Mr">Monsieur</option>
+                <option value="Mme">Madame</option>
+              </select>
+              <br>
+              <label class="form-label"> rfidCardId:</label>
+              <input type="text" formControlName="rfidCardId" class="form-control">
+              <label class="form-label">Nom:</label>
+              <input type="text" formControlName="nom" class="form-control">
+              <label class="form-label">Prénom :</label>
+              <input type="text" formControlName="prenom" class="form-control">
+              <label class="form-label">Date de naissance :</label>
+              <input type="date" formControlName="ddn" class="form-control">
+              <label class="form-label">Email:</label>
+              <input type="text"  formControlName="email" class="form-control">
+              <label class="form-label">Tel:</label>
+              <input type="text" formControlName="tel" class="form-control">
+
+            </div>
+            <div class="col-xxl ">
+              <label class="form-label">Adresse:</label>
+              <textarea class="form-control" formControlName="adresse"></textarea>
+
+              <label class="form-label">Commune:</label>
+              <input type="text" formControlName="commune" class="form-control">
+              <label class="form-label">Fonction:</label>
+              <input type="text"  formControlName="fonction" class="form-control">
+              <label class="form-label">Codepos:</label>
+              <input type="text"  formControlName="codepos" class="form-control">
+              <label class="form-label">MontantUFC (Euros):</label>
+              <input type="text"  formControlName="montantUFC" class="form-control">
+              <label class="form-label">MontantADAOU (Euros):</label>
+              <input type="text"  formControlName="montantADAOU" class="form-control">
+
+            </div>
+          </div>
+            <div class="modal-footer mt-3">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button  type="submit" class="btn btn-info text-center">Ajouter</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Modifier Participant</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+          <div>
+            <form [formGroup]="updateParticipant" (ngSubmit)="handleupdateParticipant()">
+              <div class="row">
+                <div class="col-xxl">
+                  <label class="form-label">Civilité:</label>
+                  <select formControlName="civilite" >
+                    <option value="" disabled>Sélectionnez une option</option>
+                    <option value="Mr">Monsieur</option>
+                    <option value="Mme">Madame</option>
+                  </select>
+                  <br>
+                  <label class="form-label"> rfidCardId:</label>
+                  <input type="text" formControlName=" rfidCardId" class="form-control">
+                  <label class="form-label">Nom:</label>
+                  <input type="text" formControlName="nom" class="form-control">
+                  <label class="form-label">Prénom :</label>
+                  <input type="text" formControlName="prenom" class="form-control">
+                  <label class="form-label">Date de naissance :</label>
+                  <input type="date" formControlName="ddn" class="form-control">
+                  <label class="form-label">Email:</label>
+                  <input type="text"  formControlName="email" class="form-control">
+                  <label class="form-label">Tel:</label>
+                  <input type="text" formControlName="tel" class="form-control">
+
+                </div>
+                <div class="col-xxl ">
+                  <label class="form-label">Adresse:</label>
+                  <textarea class="form-control" formControlName="adresse"></textarea>
+
+                  <label class="form-label">Commune:</label>
+                  <input type="text" formControlName="commune" class="form-control">
+                  <label class="form-label">Fonction:</label>
+                  <input type="text"  formControlName="fonction" class="form-control">
+                  <label class="form-label">Codepos:</label>
+                  <input type="text"  formControlName="codepos" class="form-control">
+                  <label class="form-label">MontantUFC (Euros):</label>
+                  <input type="text"  formControlName="montantUFC" class="form-control">
+                  <label class="form-label">MontantADAOU (Euros):</label>
+                  <input type="text"  formControlName="montantADAOU" class="form-control">
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-info text-center">Modifier</button>
+              </div>
+            </form>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
