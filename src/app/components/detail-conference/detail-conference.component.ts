@@ -4,7 +4,7 @@ import {Conference} from "../../Modele/Conference";
 import {ConferenceService} from "../../services/conference.service";
 import {ParticipantService} from "../../services/participant.service";
 import {Participant} from "../../Modele/Participant";
-import {Presence} from "../../Modele/Presence";
+
 
 @Component({
   selector: 'app-detail-conference',
@@ -18,7 +18,6 @@ export class DetailConferenceComponent implements OnInit{
   public participants ! : Participant[];
   public presences ! : Participant[];
   clicked : boolean=false;
-
 
 
   constructor(private ro:ActivatedRoute ,private cs:ConferenceService,private ps:ParticipantService ) {

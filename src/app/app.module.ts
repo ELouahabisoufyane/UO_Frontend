@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DetailConferenceComponent } from './components/detail-conference/detail-conference.component';
 import {MatTabsModule} from "@angular/material/tabs";
 
+
 @NgModule({
   declarations: [
     AppComponent,
