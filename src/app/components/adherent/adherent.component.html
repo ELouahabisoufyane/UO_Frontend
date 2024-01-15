@@ -53,22 +53,22 @@
 
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body  p-5">
 
-              <table id="example2" class="table table-borderless ">
+              <table  class="table   table-avatar table-bordered table-responsive-md text-center">
                 <thead>
                 <tr>
                   <th class="text-danger">Nom et Prénom</th>
+                  <th class="text-danger">Email</th>
                   <th class="text-danger">rfidCardId </th>
-
-
+                  <th class="text-danger">Operations</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <tr *ngFor="let p of participants ">
                   <td>{{p.civilite}}.{{p.nom}}&nbsp;{{p.prenom}} </td>
-
+                  <td>{{p.email}}</td>
                   <td>{{p.rfidCardId}}</td>
 
 
@@ -77,25 +77,29 @@
                       <i class="bi bi-trash"></i>
                     </button>
 
-                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#update" class="btn btn-success" (click)="getoldParticipant(p)">
+                    <button  type="button"  data-bs-toggle="modal" data-bs-target="#update" class="btn btn-success" (click)="getoldParticipant(p)">
                       <i class="bi bi-wrench-adjustable"></i>
+                    </button>
+                    <button  class="btn btn-info"  >
+                      Consulter
                     </button>
                   </td>
                 </tr>
 
               </table>
 
-              <div class="card-footer clearfix ">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
-                  <li class="page-item" *ngFor="let p of pages ;let i=index">
-                    <a  (click)="gotopage(i)" [ngClass]="i==currentPage? 'btn btn-success':'btn btn-outline-success'"> {{i+1}}</a>
 
-                  </li>
-                  <li class="page-item"><a class="btn btn-info" (click)="gotonext()">&raquo;</a></li>
-                </ul>
-              </div>
 
+            </div>
+            <div class="card-footer clearfix ">
+              <ul class="pagination pagination-sm m-0 float-right">
+                <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
+                <li class="page-item" *ngFor="let p of pages ;let i=index">
+                  <a  (click)="gotopage(i)" [ngClass]="i==currentPage? 'btn btn-success':'btn btn-outline-success'"> {{i+1}}</a>
+
+                </li>
+                <li class="page-item"><a class="btn btn-info" (click)="gotonext()">&raquo;</a></li>
+              </ul>
             </div>
             <!-- /.card-body -->
           </div>
@@ -200,7 +204,7 @@
                   </select>
                   <br>
                   <label class="form-label"> rfidCardId:</label>
-                  <input type="text" formControlName=" rfidCardId" class="form-control">
+                  <input type="text" formControlName="rfidCardId" class="form-control">
                   <label class="form-label">Nom:</label>
                   <input type="text" formControlName="nom" class="form-control">
                   <label class="form-label">Prénom :</label>

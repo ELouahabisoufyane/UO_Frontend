@@ -20,6 +20,10 @@ export class ParticipantService {
     return this.http.post<Participant>(this.apiBaseUrl+"/participant/addOne",participant);
   }
 
+  public updateParticipant(participant: Participant):Observable<Participant> {
+    return this.http.put<Participant>(this.apiBaseUrl+"/participant/updateOne",participant);
+  }
+
   public deleteParticipant(id: number): Observable<void> {
     return this.http.delete<void>(this.apiBaseUrl+"/participant/delete/"+id);
   }

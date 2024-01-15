@@ -15,6 +15,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DetailConferenceComponent } from './components/detail-conference/detail-conference.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import {Chart} from "chart.js";
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {MatTabsModule} from "@angular/material/tabs";
     DashboardComponent,
     ConferenceComponent,
     AdherentComponent,
-    DetailConferenceComponent
+    DetailConferenceComponent,
+    PieChartComponent
   ],
     imports: [
         BrowserModule,

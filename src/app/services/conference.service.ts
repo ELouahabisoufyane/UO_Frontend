@@ -45,21 +45,20 @@ export class ConferenceService {
    return this.http.post<Conference>(this.apiBaseUrl+'/conference/addParticipant/'+idConf,idPart);
   }
 
-  public getAllAbsences(idConf:number): Observable<Participant[]>{
+  public getAllAbsences(idConf:number, p: number, s: number): Observable<any>{
 
-    return this.http.get<Participant[]>(this.apiBaseUrl+'/conference/'+idConf+'/participants');
+    return this.http.get(this.apiBaseUrl+'/conference/'+idConf+'/participants?page='+p+'&size='+s);
   }
 
 
   public updateConference(conference: Conference):Observable<Conference> {
-    return this.http.post<Conference>(this.apiBaseUrl+"/conference/update",conference);
+    return this.http.put<Conference>(this.apiBaseUrl+"/conference/update",conference);
   }
 
   public setPresence(conferenceId: number, id: number):Observable<void> {
     return this.http.post<void>(this.apiBaseUrl+'/conference/changeEtat/'+conferenceId,id);
   }
-  public getAllPresences(idConf:number): Observable<Participant[]>{
-
-    return this.http.get<Participant[]>(this.apiBaseUrl+'/conference/'+idConf+'/presenteParticipants');
+  public getAllPresences(idConf:number, p: number, s: number): Observable<any>{
+    return this.http.get(this.apiBaseUrl+'/conference/'+idConf+'/presenteParticipants?page='+p+'&size='+s);
   }
 }

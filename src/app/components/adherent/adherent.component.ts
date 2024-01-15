@@ -58,6 +58,7 @@ export class AdherentComponent implements OnInit  {
         nom: this.oldParticipant?.nom,
         prenom: this.oldParticipant?.prenom,
         ddn:this.oldParticipant?.ddn,
+        email: this.oldParticipant?.email,
         tel: this.oldParticipant?.tel,
         adresse: this.oldParticipant?.adresse,
         commune:this.oldParticipant?.commune,
@@ -117,7 +118,7 @@ export class AdherentComponent implements OnInit  {
   public handleupdateParticipant() {
     let t= this.updateParticipant.value;
 
-    this.ps.addParticipant(t).subscribe({
+    this.ps.updateParticipant(t).subscribe({
         next: (data) => {
           alert("bien modifier");
           this.ngOnInit();
