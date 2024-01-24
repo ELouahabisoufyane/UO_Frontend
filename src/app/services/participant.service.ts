@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Participant} from "../Modele/Participant";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +41,26 @@ export class ParticipantService {
   public getParticipant(id:number): Observable<Participant>{
     return this.http.get<Participant>(this.apiBaseUrl+'/participant/getOne/'+id);
   }
+
+  chercherUnParticipant(k: string): Observable<Participant[]> {
+    return this.http.get<Participant[]>(this.apiBaseUrl+'/participant/getPartcipantByNom/'+k);
+
+  }
+ /**/
+
+  public upload(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.apiBaseUrl}/participant/Importer`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req);
+  }
+
+  deleteParticipants(): Observable<void> {
+      return this.http.delete<void>(this.apiBaseUrl+"/participant/deleteTous");
+    }
+
+
 }

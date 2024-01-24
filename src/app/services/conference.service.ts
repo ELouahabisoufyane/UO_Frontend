@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {Conference} from "../Modele/Conference";
 import {Participant} from "../Modele/Participant";
 import {Presence} from "../Modele/Presence";
+import {Statistique} from "../Modele/Statistique";
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +61,15 @@ export class ConferenceService {
   }
   public getAllPresences(idConf:number, p: number, s: number): Observable<any>{
     return this.http.get(this.apiBaseUrl+'/conference/'+idConf+'/presenteParticipants?page='+p+'&size='+s);
+  }
+
+  public getConferenceByDate(date:string):Observable<Conference>{
+    return this.http.get<Conference>(this.apiBaseUrl+'/conference/getByDate/'+date);
+
+  }
+
+  public getStatistique():Observable<Statistique[]> {
+    return this.http.get<Statistique[]>(this.apiBaseUrl+'/conference/getStatistiques');
+
   }
 }

@@ -1,4 +1,4 @@
-
+<router-outlet></router-outlet>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <div class="content-header mt-5">
@@ -114,6 +114,16 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+         <button class="btn btn-danger text-bold" (click)="this.r.navigateByUrl('/admin/statistique')">Consulter Statistique</button>
+
+     </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
 
   <div class="modal fade" id="addConference"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

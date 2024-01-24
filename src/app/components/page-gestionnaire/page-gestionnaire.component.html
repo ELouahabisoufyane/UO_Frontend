@@ -1,0 +1,68 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header mt-5 bg-white">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Gestainnaire </h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Gestainnaire  </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+
+  <!-- Main content -->
+  <section class="content" *ngIf="conference">
+    <div class="container">
+      <div class="card mt-5">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title">Conférence d'Aujourd'hui</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><strong>Titre :</strong> {{ this.conference.titre }}</p>
+          <p class="card-text"><strong>Date :</strong> {{ this.conference.date  }}</p>
+          <p class="card-text"><strong>Conferencier :</strong> {{ this.conference.conferencier }}</p>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-success" (click)="goto(conference.id)">Consulter</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content" *ngIf="!conference">
+
+    <div class="container">
+      <div class="card mt-5">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title">Conférence d'Aujourd'hui</h5>
+        </div>
+        <div class="card-body text-center">
+          <img src="assets/images/a.JPG">
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <button class="btn btn-danger text-bold" (click)="this.r.navigateByUrl('/admin/statistique')">Consulter Statistique</button>
+
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</div>
+
+

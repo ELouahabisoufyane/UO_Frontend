@@ -1,0 +1,68 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header mt-5">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Statistique </h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Conferences</a></li>
+            <li class="breadcrumb-item active">Statistique </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Conférence passée</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Date</th>
+              <th>Conférencier</th>
+              <th>Nombre des présences</th>
+              <th>Nombre des abssences</th>
+              <th>Présence Par Carte</th>
+              <th>Présence sans Carte</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let s of statistiques">
+              <td>{{s.titre}}</td>
+              <td>{{s.date}}</td>
+              <td>{{s.conferencier}}</td>
+              <td> {{s.nbPrresence}}</td>
+              <td>{{s.nbAbssence}}</td>
+              <td>{{s.parCarte}}</td>
+              <td>{{s.parGest}}</td>
+            </tr>
+
+
+            </tbody>
+
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+

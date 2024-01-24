@@ -17,6 +17,11 @@ import { DetailConferenceComponent } from './components/detail-conference/detail
 import {MatTabsModule} from "@angular/material/tabs";
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import {Chart} from "chart.js";
+import { SignComponent } from './components/sign/sign.component';
+import { UserComponent } from './components/user/user.component';
+import { PageGestionnaireComponent } from './components/page-gestionnaire/page-gestionnaire.component';
+import { StatistiqueComponent } from './components/statistique/statistique.component';
+
 
 
 @NgModule({
@@ -28,7 +33,11 @@ import {Chart} from "chart.js";
     ConferenceComponent,
     AdherentComponent,
     DetailConferenceComponent,
-    PieChartComponent
+    PieChartComponent,
+    SignComponent,
+    UserComponent,
+    PageGestionnaireComponent,
+    StatistiqueComponent
   ],
     imports: [
         BrowserModule,

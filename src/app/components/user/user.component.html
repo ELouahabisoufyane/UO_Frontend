@@ -1,0 +1,134 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header mt-5">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Utilisateurs </h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Utilisateurs</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header text-right">
+
+
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addUser">
+                    <i class="bi bi-plus">Ajouter Utilisateur</i>
+                  </button>
+
+
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body  p-5">
+
+              <table  class="table   table-avatar table-bordered table-responsive-md text-center">
+                <thead>
+                <tr>
+                  <th class="text-danger">Username</th>
+                  <th class="text-danger">Email</th>
+                  <th class="text-danger">Mot de passe</th>
+                  <th class="text-danger">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let u of users ">
+                  <td>{{u.username}}</td>
+                  <td>{{u.email}}</td>
+                  <td>{{u.password}}</td>
+                  <td>{{u.role}}</td>
+
+
+
+                  <td>
+                    <button   (click)="handleDeleteUser(u)" class="btn btn-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+
+                    <button  type="button"  data-bs-toggle="modal" data-bs-target="#update" class="btn btn-success" (click)="getoldUser(u)">
+                      <i class="bi bi-wrench-adjustable"></i>
+                    </button>
+
+                  </td>
+                </tr>
+
+              </table>
+
+
+
+            </div>
+
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+  <div class="modal fade" id="addUser"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" >Ajouter Utilisateur</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="container-fluid">
+            <form [formGroup]="addUserForm" (ngSubmit)="handleaddUser()">
+
+
+              <label class="form-label">Username :</label>
+              <input type="text" formControlName="username" class="form-control">
+              <label class="form-label">Email :</label>
+              <input type="text" formControlName="email" class="form-control">
+              <label class="form-label">Mot de passe :</label>
+              <input type="text" formControlName="password" class="form-control">
+              <label class="form-label">Role :</label>
+              <select formControlName="role"class="form-control" >
+                <option value="" disabled>Sélectionnez une option</option>
+                <option value="admin">Admin</option>
+                <option value="gestionnaire">Gestionnaire</option>
+              </select>
+
+
+
+
+              <div class="modal-footer mt-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-info text-center">Ajouter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+

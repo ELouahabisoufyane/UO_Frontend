@@ -26,7 +26,7 @@
             <div class="card-header">
               <div class="row">
 
-                <div class="col-10 ">
+                <div class="col-7 ">
 
                   <form [formGroup]="chercher" (ngSubmit)="handlechercherParticipant()">
                     <div class="input-group">
@@ -44,10 +44,27 @@
 
 
 
-                <div class="col-2">
+                <div class="col-3">
                   <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     <i class="bi bi-plus">Ajouter Participant</i>
                   </button>
+                  &nbsp;
+
+                  <button type="button " class="btn btn-success btn" data-bs-toggle="modal" data-bs-target="#addRessource">
+                    <i>Importer  Participants</i>
+                  </button>
+                  &nbsp;
+
+
+                </div>
+                <div class="col-2">
+
+                  &nbsp;
+
+                  <button type="button " class="btn btn-danger" (click)="supprimerTous()">
+                    <i >  Supprimer Tous</i>
+                  </button>
+
                 </div>
               </div>
 
@@ -62,6 +79,7 @@
                   <th class="text-danger">Email</th>
                   <th class="text-danger">rfidCardId </th>
                   <th class="text-danger">Operations</th>
+                  <th class="text-danger">Carte UO</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,8 +98,14 @@
                     <button  type="button"  data-bs-toggle="modal" data-bs-target="#update" class="btn btn-success" (click)="getoldParticipant(p)">
                       <i class="bi bi-wrench-adjustable"></i>
                     </button>
-                    <button  class="btn btn-info"  >
-                      Consulter
+                    <button  class="btn btn-info" data-bs-toggle="modal" data-bs-target="#afficher" (click)="getP(p)">
+                      <i class="bi bi-eye"></i>
+                      Afficher
+                    </button>
+                  </td>
+                  <td>
+                    <button  class="btn btn-info" data-bs-toggle="modal" data-bs-target="#affecter" (click)="getP(p)">
+                      Affecter RFID
                     </button>
                   </td>
                 </tr>
@@ -91,7 +115,7 @@
 
 
             </div>
-            <div class="card-footer clearfix ">
+            <div class="card-footer clearfix  ">
               <ul class="pagination pagination-sm m-0 float-right">
                 <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
                 <li class="page-item" *ngFor="let p of pages ;let i=index">
@@ -115,7 +139,46 @@
   </section>
   <!-- /.content -->
   <!-- Button trigger modal -->
-
+  <div class="modal fade" id="addRessource" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <label class="btn btn-default p-0">
+                <input type="file" (change)="selectFile($event)" />
+              </label>
+            </div>
+            <div class="offset-8 col-2">
+              <button button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                Annuler
+              </button>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-success btn-sm " [disabled]="!selectedFiles" (click)="upload()">
+                Importer
+              </button>
+            </div>
+          </div>
+          <div *ngIf="currentFile" class="progress my-3">
+            <div
+              class="progress-bar progress-bar-info progress-bar-striped"
+              role="progressbar"
+              attr.aria-valuenow="{{ progress }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: progress + '%' }"
+            >
+              {{ progress }}%
+            </div>
+          </div>
+          <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+          <div class="card mt-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -241,6 +304,83 @@
             </form>
           </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal fade" id="afficher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div *ngIf="p" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >{{p.nom}}&nbsp;{{p.prenom}}</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div>
+
+                <div class="row">
+                  <div class="col-xxl">
+
+                    <label class="form-label"> RfidCardId:</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.rfidCardId}}</label><br>
+                    <label class="form-label">Nom Complet:</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.civilite}} . {{p.nom}} &nbsp;{{p.prenom}}</label><br>
+                    <label class="form-label">Date de naissance :</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.ddn}}</label><br>
+                    <label class="form-label">Email:</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.email}}</label><br>
+                    <label class="form-label">Tel:</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.tel}}</label><br>
+
+                  </div>
+                  <div class="col-xxl ">
+                    <label class="form-label">Adresse:</label>
+                    <label class="form-label text-bold text-danger">&nbsp; {{p.adresse}}</label><br>
+
+                    <label class="form-label">Commune:</label>
+                    <label class="form-label text-bold text-danger">&nbsp; {{p.commune}}</label><br>
+                    <label class="form-label">Fonction:</label>
+                     <label class="form-label text-bold text-danger"> &nbsp;{{p.fonction}}</label><br>
+                    <label class="form-label">Codepos:</label>
+                    <label class="form-label text-bold text-danger">&nbsp; {{p.codepos}}</label><br>
+                    <label class="form-label">MontantUFC (Euros):</label>
+                    <label class="form-label text-bold text-danger">&nbsp; {{p.montantUFC}}</label><br>
+                    <label class="form-label">MontantADAOU (Euros):</label>
+                    <label class="form-label text-bold text-danger"> &nbsp;{{p.montantADAUO}}</label><br>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal fade" id="affecter"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Affecter Rfid</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <h3 *ngIf="p" >le participant sélectionné est : <span class="text-bold"> {{p.nom}} </span></h3>
+          <br>
+          <label class="font-italic text-success">{{this.messageReception}}</label>
+
         </div>
       </div>
     </div>

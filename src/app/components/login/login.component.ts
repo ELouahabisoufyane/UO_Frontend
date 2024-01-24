@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
+import {User} from "../../Modele/User";
 
 @Component({
   selector: 'app-login',
@@ -11,10 +13,12 @@ export class LoginComponent implements OnInit {
   public LoginGroup!: FormGroup;
 
   errormessage:any;
+  public user: User = { id: Number(null), username: "",email:"", password: "", role:""};
   hide=true;
   constructor(
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    public auth: AuthService) {
 
 
   }
@@ -29,15 +33,27 @@ export class LoginComponent implements OnInit {
 
 
   handleLogin() {
-    let username =this.LoginGroup.value.username;
-    let password = this.LoginGroup.value.password;
-    if(username=="admin" && password=="admin"){
-      this.router.navigateByUrl("/admin/dashboard");
+    this.user.username =this.LoginGroup.value.username;
+    this.user.password = this.LoginGroup.value.password;
+    this.auth.Login(this.user).subscribe({
+        next:(data) =>
+        {
+          if(data){
 
-    }
-    else{
-      this.errormessage="user not find";
-    }
+            this.auth.authenticateUser(data);
+
+
+            this.router.navigateByUrl("/admin/dashboard");
+
+          }
+          else{
+            this.errormessage="user not find";
+          }
+
+        }
+      }
+    )
+
 
 
 

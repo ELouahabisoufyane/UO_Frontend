@@ -5,6 +5,7 @@ import {ParticipantService} from "../../services/participant.service";
 import {Conference} from "../../Modele/Conference";
 import {ConferenceService} from "../../services/conference.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 
 @Component({
@@ -28,7 +29,7 @@ export class ConferenceComponent implements OnInit{
   pagesize:number=4;
   totalPages :number=0;
   pages!: Array<any>;
-  constructor(public cs:ConferenceService, private fb: FormBuilder ,private r :Router)
+  constructor(public auth:AuthService,public cs:ConferenceService, private fb: FormBuilder ,public  r :Router)
   { }
   ngOnInit(): void {
     this.chercher=this.fb.group(

@@ -5,13 +5,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">{{conference.titre}} </h1>
+          <h1 class="m-0">{{conference.titre}} <br> {{this.presenceUpdateMessage}}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item active">Conference </li>
-            <li class="breadcrumb-item active">{{conference.titre}} </li>
+
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -25,9 +25,9 @@
       <div class="row">
         <div class="col-md-6">
           <!-- AREA CHART -->
-          <div class="card card-primary">
+          <div class="card card-primary"  >
             <div class="card-header">
-              <h3 class="card-title">Liste des Absences</h3>
+              <h3 class="card-title">Liste des Participants</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -39,54 +39,65 @@
               </div>
             </div>
             <div class="card-body">
-              <table class="table mt-4">
-              <tbody>
-              <tr *ngFor="let p of participants">
-                <td>{{p.nom}}</td>
-
-                <td>{{p.prenom}}</td>
-
-                <td>{{p.prenom}}</td>
-                <td>{{p.prenom}}</td>
-                <td class="text-right">
-                  <button class="btn btn-success" (click)="setAccepted(p)">Marquer Presence</button>
-
-                </td>
 
 
-              </tr>
-              </tbody>
 
+
+
+              <form [formGroup]="chercher" (ngSubmit)="handlechercherParticipant()">
+                <div class="input-group">
+                  <label class="input-group-text">Nom:</label>
+                  <input type="text" class="form-control" formControlName="keyword">
+                  <button type="submit" class="btn btn-info">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+
+              </form>
+
+              <table *ngIf="pts" class="table   table-avatar table-bordered table-responsive-md text-center mt-3">
+                <thead>
+                <tr>
+                  <th class="text-danger">Nom et Prénom</th>
+                  <th class="text-danger">Email</th>
+                  <th class="text-danger">Opération</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let participant of pts" >
+
+                  <td>{{this.participant.civilite}}.{{this.participant.nom}}&nbsp;{{this.participant.prenom}} </td>
+                  <td>{{this.participant.email}}</td>
+
+
+
+                  <td>
+
+
+                    <button  type="button"  class="btn btn-success" (click)="this.setAccepted(this.participant)">
+                      marquer presence
+                    </button>
+
+                  </td>
+                </tr>
 
               </table>
-              <div class="card-footer clearfix ">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="btn btn-info" (click)="gotoprevious()">&laquo;</a></li>
-                  <li class="page-item" *ngFor="let p of pagesA ;let i=index">
-                    <a  (click)="gotopage(i)" [ngClass]="i==currentPageA? 'btn btn-success':'btn btn-outline-success'"> {{i+1}}</a>
 
-                  </li>
-                  <li class="page-item"><a class="btn btn-info" (click)="gotonext()">&raquo;</a></li>
-                </ul>
-              </div>
+
+
+
+
             </div>
             <!-- /.card-body -->
           </div>
-          <!-- /.card -->
 
-          <!-- DONUT CHART -->
-
-          <!-- /.card -->
-
-          <!-- PIE CHART -->
-
-          <!-- /.card -->
 
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
           <!-- LINE CHART -->
-          <div class="card card-info">
+          <div class="card card-info" >
             <div class="card-header">
               <h3 class="card-title">Liste des présences</h3>
 
@@ -138,6 +149,6 @@
 
     </div><!-- /.container-fluid -->
   </section>
-  <app-pie-chart [m]="l"  [a]="ll" ></app-pie-chart>
+
 </div>
 
