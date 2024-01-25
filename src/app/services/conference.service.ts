@@ -46,9 +46,9 @@ export class ConferenceService {
    return this.http.post<Conference>(this.apiBaseUrl+'/conference/addParticipant/'+idConf,idPart);
   }
 
-  public getAllAbsences(idConf:number, p: number, s: number): Observable<any>{
+  public getAllAbsences(idConf:number): Observable<Participant[]>{
 
-    return this.http.get(this.apiBaseUrl+'/conference/'+idConf+'/participants?page='+p+'&size='+s);
+    return this.http.get<Participant[]>(this.apiBaseUrl+'/conference/'+idConf+'/participants');
   }
 
 

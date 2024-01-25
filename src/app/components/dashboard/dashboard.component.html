@@ -57,7 +57,7 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>89%</h3>
+              <h3>{{this.taux | number:'1.2-2'}}%</h3>
 
               <p>Taux de Présence</p>
             </div>
@@ -72,7 +72,7 @@
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>20</h3>
+              <h3>{{this.nConference}}</h3>
 
               <p>Sujet de Conférence</p>
             </div>
@@ -95,7 +95,7 @@
           <!-- AREA CHART -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Area Chart</h3>
+              <h3 class="card-title">Camembert</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -145,7 +145,7 @@
             <div class="card-body">
               <div class="text-center">
 
-                <img src="assets/images/h.png" style="height:260px">
+                <canvas id="myBar" ></canvas>
 
               </div>
             </div>

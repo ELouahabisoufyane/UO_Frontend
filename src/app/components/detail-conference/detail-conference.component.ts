@@ -21,8 +21,8 @@ export class DetailConferenceComponent implements OnInit{
   public participants: Participant[] = [];
   public presences  : Participant[]=[];
   clicked : boolean=false;
-  public l :number=0;
-  public ll : number =0;
+  public p :number=0;
+  public a : number =0;
   public presenceUpdateMessage!: string;
 
   public  currentPageP: number=0;
@@ -70,7 +70,30 @@ export class DetailConferenceComponent implements OnInit{
     this.chercher=this.fb.group(
       {keyword:this.fb.control(null)}
     );
-    this.handleGetpagePresences();
+    this.cs.getAllPresences(this.conferenceId,this.currentPageP,this.pagesizeP).subscribe(
+      {
+        next :(data)=>{
+
+          this.presences=data['content'];
+          this.pagesP=new Array(data['totalPages']);
+          this.totalPagesP=data['totalPages'];
+          this.p=data['totalElements'];
+          console.log(this.p);
+          this.createChart();
+
+        }
+      }
+    );
+    this.cs.getAllAbsences(this.conferenceId).subscribe(
+      {
+        next :(data)=>{
+          this.a=data.length;
+          console.log(this.a);
+          this.createChart();
+
+        }
+      }
+    );
 
 
   }
@@ -125,24 +148,34 @@ export class DetailConferenceComponent implements OnInit{
 
   private handleGetpagePresences() {
 
-    this.cs.getAllPresences(this.conferenceId,this.currentPageP,this.pagesizeP).subscribe(
-      {
-        next :(data)=>{
 
-          this.presences=data['content'];
-          this.pagesP=new Array(data['totalPages']);
-          this.totalPagesP=data['totalPages'];
-          this.l=data['totalElements'];
 
-        }
-      }
-    )
 
 
   }
 
   private handlechercherAbsences() {
 
+  }
+  private createChart(): void {
+    if (this.p >= 0 && this.a >= 0) {
+      const d = {
+        labels: ['Presence', 'Absence'],
+        datasets: [
+          {
+
+            data: [this.p , this.a],
+            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
+            hoverOffset: 3,
+          },
+        ],
+      };
+
+      new Chart('myChart', {
+        type: 'pie',
+        data: d,
+      });
+    }
   }
 
 
