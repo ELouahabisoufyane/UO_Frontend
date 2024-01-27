@@ -87,6 +87,48 @@
     </div>
     <!-- /.container-fluid -->
   </section>
+  <div class="modal fade" id="update"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" >Modifier Utilisateur</h5>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="container-fluid">
+            <form [formGroup]="updateUserForm" (ngSubmit)="handleupdateUser()">
+
+
+              <label class="form-label">Username *:</label>
+              <input type="text" formControlName="username" class="form-control">
+              <label class="form-label">Email :</label>
+              <input type="text" formControlName="email" class="form-control">
+              <label class="form-label">Mot de passe * :</label>
+              <input type="text" formControlName="password" class="form-control">
+              <label class="form-label">Role * :</label>
+              <select formControlName="role"class="form-control" >
+                <option value="" disabled>Sélectionnez une option</option>
+                <option value="admin">Admin</option>
+                <option value="gestionnaire">Gestionnaire</option>
+              </select>
+
+
+
+
+
+              <div class="modal-footer mt-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-info text-center">Ajouter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <div class="modal fade" id="addUser"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -103,17 +145,26 @@
 
 
               <label class="form-label">Username :</label>
-              <input type="text" formControlName="username" class="form-control">
+              <input type="text" formControlName="username" class="form-control" required>
+              <div *ngIf="this.messageUsernameErreur"   class=" text-danger">
+                {{this.messageUsernameErreur}}
+              </div>
               <label class="form-label">Email :</label>
               <input type="text" formControlName="email" class="form-control">
               <label class="form-label">Mot de passe :</label>
-              <input type="text" formControlName="password" class="form-control">
+              <input type="text" formControlName="password" class="form-control" required>
+              <div *ngIf="this.messagePasswordErreur"   class=" text-danger">
+                {{this.messagePasswordErreur}}
+              </div>
               <label class="form-label">Role :</label>
-              <select formControlName="role"class="form-control" >
+              <select formControlName="role"class="form-control" required>
                 <option value="" disabled>Sélectionnez une option</option>
                 <option value="admin">Admin</option>
                 <option value="gestionnaire">Gestionnaire</option>
               </select>
+              <div *ngIf="this.messageRoleErreur"   class=" text-danger">
+                {{this.messageRoleErreur}}
+              </div>
 
 
 

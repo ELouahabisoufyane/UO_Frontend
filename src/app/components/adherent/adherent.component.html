@@ -204,10 +204,19 @@
               <br>
               <label class="form-label"> rfidCardId:</label>
               <input type="text" formControlName="rfidCardId" class="form-control">
-              <label class="form-label">Nom:</label>
-              <input type="text" formControlName="nom" class="form-control">
-              <label class="form-label">Prénom :</label>
-              <input type="text" formControlName="prenom" class="form-control">
+              <label class="form-label">Nom *:</label>
+              <input type="text" formControlName="nom" class="form-control" required>
+
+              <div *ngIf="this.addmessageErreurN"   class=" text-danger">
+                {{this.addmessageErreurN}}
+              </div>
+
+              <label class="form-label">Prénom * :</label>
+              <input type="text" formControlName="prenom" class="form-control" required>
+              <div *ngIf="this.addmessageErreurP"   class=" text-danger">
+                {{this.addmessageErreurP}}
+              </div>
+
               <label class="form-label">Date de naissance :</label>
               <input type="date" formControlName="ddn" class="form-control">
               <label class="form-label">Email:</label>
@@ -377,9 +386,9 @@
         </div>
         <div class="modal-body">
 
-          <h3 *ngIf="p" >le participant sélectionné est : <span class="text-bold"> {{p.nom}} </span></h3>
+          <h3 *ngIf="p" ><span class="text-bold"> {{p.nom}} </span></h3>
           <br>
-          <label class="font-italic text-success">{{this.messageReception}}</label>
+          <H1 class="font-italic text-red">{{this.messageReception}}</H1>
 
         </div>
       </div>

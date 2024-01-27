@@ -72,4 +72,8 @@ export class ConferenceService {
     return this.http.get<Statistique[]>(this.apiBaseUrl+'/conference/getStatistiques');
 
   }
+
+  public deleteConferences() : Observable<void> {
+    return this.http.delete<void>(this.apiBaseUrl+"/conference/deleteTous");
+  }
 }

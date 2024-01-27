@@ -34,6 +34,8 @@ export class AdherentComponent implements OnInit  {
   fileName = '';
   selectedFiles?: FileList;
   messageReception !:string ;
+  public addmessageErreurP : any;
+  public addmessageErreurN: any;
   constructor(private r:Router,private ws :WebSocketService,public ps:ParticipantService, private fb: FormBuilder)
   { }
   ngOnInit(): void {
@@ -48,8 +50,8 @@ export class AdherentComponent implements OnInit  {
       {
         civilite: this.fb.control(null),
         rfidCardId: this.fb.control(null),
-        nom: this.fb.control(null),
-        prenom: this.fb.control(null),
+        nom: this.fb.control(null, [Validators.required]),
+        prenom: this.fb.control(null, [Validators.required]),
         ddn: this.fb.control(null),
         email: this.fb.control(null),
         tel: this.fb.control(null),
@@ -118,7 +120,7 @@ export class AdherentComponent implements OnInit  {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
-
+              this.currentFile = undefined;
               this.ngOnInit();
             }
           },
@@ -146,15 +148,25 @@ export class AdherentComponent implements OnInit  {
 
 
   public handleaddParticipant() {
+    this.addmessageErreurN=null
+    this.addmessageErreurP=null
     this.participant= this.addParticipantForm.value;
+    if(this.addParticipantForm.valid){
     this.ps.addParticipant(this.participant).subscribe({
         next: (data) => {
           alert("bien ajouter");
+
           this.ngOnInit();
 
         }
       }
-    );
+    );}
+    else{
+      if(this.addParticipantForm.get("nom")?.invalid)
+        this.addmessageErreurN="Le nom est requis"
+      if(this.addParticipantForm.get("prenom")?.invalid)
+        this.addmessageErreurP="Le prénom est requis."
+    }
   }
   public handleDeleteParticipant(p: Participant) {
     let conf=confirm("êtes-vous sûr de vouloir supprimer");
@@ -179,6 +191,8 @@ export class AdherentComponent implements OnInit  {
     this.ps.updateParticipant(t).subscribe({
         next: (data) => {
           alert("bien modifier");
+          this.oldParticipant=this.updateParticipant.value;
+
           this.ngOnInit();
         }
       }
@@ -263,7 +277,7 @@ export class AdherentComponent implements OnInit  {
       this.ws.subscribe('socket/someoneJoined', (event) => {
 
         if(event.body){
-          this.messageReception = "Nous avons bien reçu le participant , vous pouvez maintenant scanner la carte et patientez... ";
+          this.messageReception = "Vous pouvez maintenant scanner la carte et patientez... ";
         }
         else{
           this.messageReception ="System Down"

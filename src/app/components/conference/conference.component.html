@@ -25,7 +25,7 @@
           <div class="card-header">
             <div class="row">
 
-              <div class="col-10 ">
+              <div class="col-8 ">
 
                 <form [formGroup]="chercher" (ngSubmit)="handlechercherConference()">
                   <div class="input-group">
@@ -47,6 +47,15 @@
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addConference">
                   <i class="bi bi-plus">Ajouter Conference</i>
                 </button>
+              </div>
+              <div class="col-2">
+
+                &nbsp;
+
+                <button type="button " class="btn btn-danger" (click)="supprimerTous()">
+                  <i >  Supprimer Tous</i>
+                </button>
+
               </div>
             </div>
 

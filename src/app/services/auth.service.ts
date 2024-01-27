@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {User} from "../Modele/User";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {Participant} from "../Modele/Participant";
 
 @Injectable({
   providedIn: 'root'
@@ -52,4 +53,13 @@ export class AuthService {
   public getUser(id :string):Observable<User>{
     return this.http.get<User>(this.baseUrl+"/user/getOne/"+id);
   }
+
+  public updateUser(u: User):Observable<User> {
+    return this.http.put<User>(this.baseUrl+"/user/updateOne",u);
+  }
+
+  public deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl+"/user/delete/"+id);
+  }
+
 }

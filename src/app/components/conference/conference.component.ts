@@ -186,4 +186,21 @@ export class ConferenceComponent implements OnInit{
 
 
   }
+
+  supprimerTous() {
+    let conf=confirm("êtes-vous sûr de vouloir supprimer Tous");
+    if(conf==false)
+      return;
+    else{
+      this.cs.deleteConferences().subscribe(
+        {
+          next:(data)=>{
+            let conf=confirm("Bien supprimer");
+            this.ngOnInit();
+          }
+        }
+      )
+    }
+
+  }
 }
